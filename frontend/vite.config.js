@@ -1,7 +1,14 @@
 import react from '@vitejs/plugin-react'
+import reactCompiler from 'babel-plugin-react-compiler'
 import { defineConfig } from 'vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react({
+      babel: {
+        plugins: [reactCompiler],
+      },
+    }),
+  ],
 })
