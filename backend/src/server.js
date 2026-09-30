@@ -1,18 +1,19 @@
+import "dotenv/config";
 import dns from "node:dns/promises";
-dns.setServers(["1.1.1.1", "8.8.8.8"]);
 import express from "express";
 import { connectDB } from "./config/db.js";
-import "dotenv/config";
+import User from "./models/user.model.js";
+
+dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
 const app = express();
 
 const PORT = process.env.PORT || 3000;
 
-connectDB();
+await connectDB();
 
+// MIDDLEWARE
 app.use(express.json());
-
-
 
 app.get("/", (req, res) => {
   res.send("Hello Server");
