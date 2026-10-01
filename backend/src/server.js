@@ -8,6 +8,7 @@ import cors from "cors";
 import fs from "fs";
 import path from "path";
 import job from "./config/cron.js";
+import clerkWebhook from "./webhooks/clerk.webhook.js";
 
 dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
@@ -20,6 +21,14 @@ const publicDir = path.join(process.cwd(), "public");
 await connectDB();
 
 // MIDDLEWARE
+
+// it's important that you don't parse the webHook event data, it should be in raw format
+app.use(
+  "/api/webhooks/clerk",
+  express.raw({ type: "application/json" }),
+  clerkWebhook,
+);
+
 app.use(express.json());
 app.use(cors({ origin: FRONTEND_URL, credentials: true }));
 app.use(clerkMiddleware());
