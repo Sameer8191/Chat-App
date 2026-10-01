@@ -7,6 +7,7 @@ import { clerkMiddleware } from "@clerk/express";
 import cors from "cors";
 import fs from "fs";
 import path from "path";
+import job from "./config/cron.js";
 
 dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
