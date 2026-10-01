@@ -23,10 +23,6 @@ app.use(express.json());
 app.use(cors({ origin: FRONTEND_URL, credentials: true }));
 app.use(clerkMiddleware());
 
-app.get("/", (req, res) => {
-  res.send("Hello Server");
-});
-
 app.get("/health", (req, res) => {
   res.status(200).json({ ok: true });
 });
@@ -44,4 +40,8 @@ if (fs.existsSync(publicDir)) {
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}/`);
+
+  if (process.env.NODE_ENV === "production") {
+    job.start();
+  }
 });
