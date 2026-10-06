@@ -9,12 +9,12 @@ import fs from "fs";
 import path from "path";
 import job from "./config/cron.js";
 import clerkWebhook from "./webhooks/clerk.webhook.js";
-import authRoutes from "./routes/auth.route.js"
-import messageRoutes from "./routes/message.route.js"
+import authRoutes from "./routes/auth.route.js";
+import messageRoutes from "./routes/message.route.js";
+import { app, server } from "./config/socket.js";
 
 dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
-const app = express();
 const PORT = process.env.PORT || 3000;
 const FRONTEND_URL = process.env.FRONTEND_URL;
 
@@ -35,16 +35,14 @@ app.use(express.json());
 app.use(cors({ origin: FRONTEND_URL, credentials: true }));
 app.use(clerkMiddleware());
 
-
 app.get("/health", (req, res) => {
   res.status(200).json({ ok: true });
 });
 
 //Routes
 
-app.use("/api/auth",authRoutes)
-app.use("/api/messages",messageRoutes)
-
+app.use("/api/auth", authRoutes);
+app.use("/api/messages", messageRoutes);
 
 // if the public directory exists, serve the static files
 // this is for the production build
@@ -57,7 +55,7 @@ if (fs.existsSync(publicDir)) {
   });
 }
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}/`);
 
   if (process.env.NODE_ENV === "production") {
