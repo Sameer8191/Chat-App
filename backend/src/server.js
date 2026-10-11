@@ -1,17 +1,17 @@
 import "dotenv/config";
 import dns from "node:dns/promises";
 import express from "express";
-import { connectDB } from "./config/db.js";
+import { connectDB } from "./lib/db.js";
 import User from "./models/user.model.js";
 import { clerkMiddleware } from "@clerk/express";
 import cors from "cors";
 import fs from "fs";
 import path from "path";
-import job from "./config/cron.js";
+import job from "./lib/cron.js";
 import clerkWebhook from "./webhooks/clerk.webhook.js";
 import authRoutes from "./routes/auth.route.js";
 import messageRoutes from "./routes/message.route.js";
-import { app, server } from "./config/socket.js";
+import { app, server } from "./lib/socket.js";
 
 dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
