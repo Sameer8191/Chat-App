@@ -35,16 +35,16 @@ export const getConversationsForSidebar = async (req, res) => {
           //The partner is the other person on the message (not me).
           _id: {
             $cond: [
-              { $eq: ["senderId", loggedInUserId] },
-              "receiverId",
-              "senderId",
+              { $eq: ["$senderId", loggedInUserId] },
+              "$receiverId",
+              "$senderId",
             ],
           },
-          lastMessageAt: { $max: "createdAt" },
+          lastMessageAt: { $max: "$createdAt" },
         },
       },
       //3. put the most recent conversation at the top
-      { sort: { lastMessageAt: -1 } },
+      { $sort: { lastMessageAt: -1 } },
       //4. Look up each partner's user profile (comes back as an array).
       {
         $lookup: {
