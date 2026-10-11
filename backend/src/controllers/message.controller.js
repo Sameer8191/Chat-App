@@ -1,6 +1,6 @@
 import User from "../models/user.model.js";
 import Message from "../models/message.model.js";
-import { getReceiverSocketId } from "../config/socket.js";
+import { getReceiverSocketId, io } from "../config/socket.js";
 
 export const getUsersForSidebar = async (req, res) => {
   try {
