@@ -4,4 +4,6 @@ export const checkAuth = async (req, res, next) => {
       message: "Unauthorized",
     });
   }
+
+  return res.status(200).json(req.user);
 };
